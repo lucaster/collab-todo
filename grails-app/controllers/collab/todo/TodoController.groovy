@@ -7,6 +7,7 @@ import collab.todo.*
 
 class TodoController {
 
+	// Inject
 	def authenticateService
 
 	def index = { redirect(action:list,params:params) }

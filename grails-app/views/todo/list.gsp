@@ -133,6 +133,12 @@
 	            new Draggable('todoDetail1', {ghosting: true, revert: true})            
 	        </script>
 		</div>
+		
+		
+		<!-- Report commands -->
+		<g:report id="todoReport" controller="TodoController" action="userTodo" report="userTodo" format="PDF,HTML,CSV,XLS,RTF,TXT,XML">
+			<input type="hidden" name="userName" value="${todoList[0]?.owner}" />
+		</g:report>
 	</div>
 </body>
 </html>

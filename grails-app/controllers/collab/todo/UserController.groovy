@@ -8,6 +8,9 @@ class UserController {
 	
 	EMailAuthenticatedService eMailAuthenticatedService
 	
+	// Inject
+	def authenticateService
+	
 	def index = { redirect(action:list,params:params) }
 
 	// the delete, save and update actions only accept POST requests
@@ -116,7 +119,8 @@ class UserController {
 	}
 
 	def handleLogin = {
-		def user = User.findByUserName(params.userName)
+		//def user = User.findByUserName(params.userName)
+		def user = User.findByUserName(authenticateService.principal().getUsername())
 		if (!user) {
 			flash.message = "User not found for userName: ${params.userName}"
 			redirect(action:'login')
@@ -155,6 +159,16 @@ class UserController {
 			return false
 		}
 		true
+	}
+
+	/**
+	 * Used to retrieve user Todo for reports
+	 * We might extend it to take some params
+	 */
+	def userTodo = {
+		//def user = User.get(session.user.id)
+		def user = User.findByUserName(authenticateService.principal().getUsername())
+		return Todo.findAllByOwner(user)
 	}
 
 }
