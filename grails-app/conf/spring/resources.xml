@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>1000000</value>
+		</property>
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="session" ref="mailSession" />
+	</bean>
+
+	<bean id="mailSession" class="javax.mail.Session" factory-method="getInstance">
+		<constructor-arg>
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.port">465</prop>
+				<!-- 
+				If SSL needed... 
+				<prop key="mail.smtp.socketFactory.port">465</prop> 
+				<prop key="mail.smtp.socketFactory.class"> javax.net.ssl.SSLSocketFactory 
+				</prop> <prop key="mail.smtp.socketFactory.fallback"> false </prop> 
+				-->
+			</props>
+		</constructor-arg>
+		<constructor-arg ref="smtpAuthenticator" />
+	</bean>
+
+	<bean id="smtpAuthenticator" class="SmtpAuthenticator">
+		<constructor-arg value="luca.cavagnoli@gmail.com" /> <!-- username -->
+		<constructor-arg value="charliee" /> <!-- password -->
+	</bean>
+	
+</beans>

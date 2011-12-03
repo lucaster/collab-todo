@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="layout" content="main" />
+        <title>Todo List</title>
+    </head>
+    <body>
+    	<g:preLoadShowHide/>
+    	<g:javascript library="scriptaculous" />
+        <div class="nav">
+            <span class="menuButton"><a class="home" href="${createLinkTo(dir:'')}">Home</a></span>
+            <span class="menuButton"><g:link class="create" action="create">New Todo</g:link></span>
+        </div>
+        <div class="body">
+            <h2>
+				Todo List
+				<g:showHide update="addToDo">
+					<img border=0 src="${createLinkTo(dir:'images',file:'add_obj.gif')}" alt="[ADD]" />
+				</g:showHide>
+			</h2>
+
+            <div id="messageDisplay">
+				<g:if test="${flash.message}">
+					<div class="message">
+						${flash.message}
+					</div>
+				</g:if>
+				<g:hasErrors bean="${todo}">
+					<div class="message">
+						<g:eachError bean="${book}">
+    						<li><g:message error="${it}"/></li>	
+						</g:eachError>
+					</div>
+				</g:hasErrors>
+			</div>
+            
+            <div class="list">
+                <table>
+                    <thead>
+                        <tr>
+                   	    
+                   	        <g:sortableColumn property="name" title="Name" />
+                        
+                   	        <g:sortableColumn property="createdDate" title="Created Date" />
+                        
+                   	        <g:sortableColumn property="dueDate" title="Due Date" />
+                        
+                   	        <g:sortableColumn property="priority" title="Priority" />
+                   	        
+                   	        <g:sortableColumn property="status" title="Status" />
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${todoList}" status="i" var="todo">
+                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        
+                            <td><g:link action="show" id="${todo.id}">${todo.name?.encodeAsHTML()}</g:link></td>
+                        
+                            <td>${todo.createdDate?.encodeAsHTML()}</td>
+                        
+                            <td>${todo.dueDate?.encodeAsHTML()}</td>
+                        
+                            <td>${todo.priority?.encodeAsHTML()}</td>
+                            
+                            <td>${todo.status?.encodeAsHTML()}</td>
+                        
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="todoList">
+				<g:render template="detail" var="todo" collection="${todoList}" />
+			</div>
+            
+            <div class="paginateButtons">
+                <g:paginate total="${collab.todo.Todo.count()}" />
+            </div>
+        </div>
+    </body>
+</html>
