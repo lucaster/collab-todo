@@ -136,7 +136,7 @@
 		
 		
 		<!-- Report commands -->
-		<g:report id="todoReport" controller="TodoController" action="userTodo" report="userTodo" format="PDF,HTML,CSV,XLS,RTF,TXT,XML">
+		<g:report id="todoReport" controller="collab.todo.TodoController" action="userTodo" report="userTodo" format="PDF,HTML,CSV,XLS,RTF,TXT,XML">
 			<input type="hidden" name="userName" value="${todoList[0]?.owner}" />
 		</g:report>
 	</div>

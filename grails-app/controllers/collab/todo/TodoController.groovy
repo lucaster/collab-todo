@@ -206,4 +206,14 @@ class TodoController {
 		list
 	}
 
+	/**
+	 * Used to retrieve user Todo for reports
+	 * We might extend it to take some params
+	 */
+	def userTodo = {
+		//def user = User.get(session.user.id)
+		def user = User.findByUserName(authenticateService.principal().getUsername())
+		return Todo.findAllByOwner(user)
+	}
+
 }
